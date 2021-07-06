@@ -68,5 +68,4 @@ public class ReportsUpdateServlet extends HttpServlet {
             }
         }
     }
-
 }
