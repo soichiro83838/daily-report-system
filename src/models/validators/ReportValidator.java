@@ -19,6 +19,16 @@ public class ReportValidator {
             errors.add(content_error);
         }
 
+        String commutingtime_error = _validateCommutingtime(r.getCommutingtime());
+        if(!commutingtime_error.equals("")) {
+            errors.add(commutingtime_error);
+        }
+
+        String leavingtime_error = _validateLeavingtime(r.getLeavingtime());
+        if(!leavingtime_error.equals("")) {
+            errors.add(leavingtime_error);
+        }
+
         return errors;
     }
 
@@ -33,6 +43,22 @@ public class ReportValidator {
     private static String _validateContent(String content) {
         if(content == null || content.equals("")) {
             return "内容を入力してください。";
+        }
+
+        return "";
+    }
+
+    private static String _validateCommutingtime(String commutingtime) {
+        if(commutingtime == null || commutingtime.equals("")) {
+            return "出勤時間を入力してください。";
+        }
+
+        return "";
+    }
+
+    private static String _validateLeavingtime(String leavingtime) {
+        if(leavingtime == null || leavingtime.equals("")) {
+            return "退勤時間を入力してください。";
         }
 
         return "";

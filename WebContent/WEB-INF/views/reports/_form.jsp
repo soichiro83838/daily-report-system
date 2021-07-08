@@ -37,5 +37,17 @@
 <br />
 <br />
 
+<label for="commutingtime">出勤時間　（例：08時30分）</label>
+<br />
+<input type="text" name="commutingtime" value="${report.commutingtime}" />
+<br />
+<br />
+
+<label for="leavingtime">退勤時間　（例：17時30分）</label>
+<br />
+<input type="text" name="leavingtime" value="${report.leavingtime}" />
+<br />
+<br />
+
 <input type="hidden" name="_token" value="${_token}" />
 <button type="submit">投稿</button>
