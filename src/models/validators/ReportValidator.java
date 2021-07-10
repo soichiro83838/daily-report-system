@@ -1,5 +1,5 @@
 package models.validators;
-
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,14 +20,18 @@ public class ReportValidator {
         }
 
         String commutingtime_error = _validateCommutingtime(r.getCommutingtime());
-        if(!commutingtime_error.equals("")) {
-            errors.add(commutingtime_error);
-        }
+      if(!commutingtime_error.equals("")) {
+         errors.add(commutingtime_error);
+       }
 
         String leavingtime_error = _validateLeavingtime(r.getLeavingtime());
-        if(!leavingtime_error.equals("")) {
+       if(!leavingtime_error.equals("")) {
             errors.add(leavingtime_error);
-        }
+       }
+       String commutingleavingtime_error = _validateCommutingtimeLeavingtime(r.getCommutingtime(),r.getLeavingtime());
+       if(!commutingleavingtime_error.equals("")) {
+            errors.add(commutingleavingtime_error);
+       }
 
         return errors;
     }
@@ -48,19 +52,28 @@ public class ReportValidator {
         return "";
     }
 
-    private static String _validateCommutingtime(String commutingtime) {
+    private static String _validateCommutingtime(Time commutingtime) {
         if(commutingtime == null || commutingtime.equals("")) {
             return "出勤時間を入力してください。";
+        }else if(commutingtime.toString().equals("00:00:00")) {
+            return "出勤時間は時刻の形式で入力ください";
         }
-
         return "";
     }
 
-    private static String _validateLeavingtime(String leavingtime) {
+
+    private static String _validateLeavingtime(Time leavingtime) {
         if(leavingtime == null || leavingtime.equals("")) {
             return "退勤時間を入力してください。";
+        }else if(leavingtime.toString().equals("00:00:00")) {
+            return "退勤時間は時刻の形式で入力ください";
         }
-
+        return "";
+    }
+    private static String _validateCommutingtimeLeavingtime(Time commutingtime, Time leavingtime) {
+        if(commutingtime.after(leavingtime)) {
+            return "出勤時間は退勤時間より前の時間を入力してください。";
+        }
         return "";
     }
 }

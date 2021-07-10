@@ -2,6 +2,7 @@ package controllers.reports;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -44,8 +45,8 @@ public class ReportsUpdateServlet extends HttpServlet {
             r.setReport_date(Date.valueOf(request.getParameter("report_date")));
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
-            r.setCommutingtime(request.getParameter("commutingtime"));
-            r.setLeavingtime(request.getParameter("leavingtime"));
+            r.setCommutingtime(Time.valueOf(request.getParameter("commutingtime") + ":00"));
+            r.setLeavingtime(Time.valueOf(request.getParameter("leavingtime") + ":00"));
             r.setUpdated_at(new Timestamp(System.currentTimeMillis()));
 
             List<String> errors = ReportValidator.validate(r);

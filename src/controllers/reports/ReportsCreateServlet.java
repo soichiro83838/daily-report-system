@@ -2,6 +2,7 @@ package controllers.reports;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -45,16 +46,34 @@ public class ReportsCreateServlet extends HttpServlet {
             r.setEmployee((Employee)request.getSession().getAttribute("login_employee"));
 
             Date report_date = new Date(System.currentTimeMillis());
+            Time commutingtime = new Time(System.currentTimeMillis());
+            Time leavingtime = new Time(System.currentTimeMillis());
             String rd_str = request.getParameter("report_date");
+            String ct_str = request.getParameter("commutingtime");
+            String lt_str = request.getParameter("leavingtime");
             if(rd_str != null && !rd_str.equals("")) {
                 report_date = Date.valueOf(request.getParameter("report_date"));
+            }
+            if(ct_str != null && !rd_str.equals("")) {
+                try{
+                    commutingtime = Time.valueOf(request.getParameter("commutingtime") + ":00");
+                }catch(Exception e){
+                    commutingtime = Time.valueOf("00:00:00");
+                }
+            }
+            if(lt_str != null && !lt_str.equals("")) {
+                try{
+                    leavingtime = Time.valueOf(request.getParameter("leavingtime") + ":00");
+                }catch(Exception e){
+                    leavingtime = Time.valueOf("00:00:00");
+                }
             }
             r.setReport_date(report_date);
 
             r.setTitle(request.getParameter("title"));
             r.setContent(request.getParameter("content"));
-            r.setCommutingtime(request.getParameter("commutingtime"));
-            r.setLeavingtime(request.getParameter("leavingtime"));
+            r.setCommutingtime(commutingtime);
+            r.setLeavingtime(leavingtime);
 
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             r.setCreated_at(currentTime);
@@ -81,5 +100,4 @@ public class ReportsCreateServlet extends HttpServlet {
             }
         }
     }
-
 }
